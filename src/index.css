@@ -146,8 +146,7 @@ body{
 
 .listClass{
   width: 600px;
-  height: 410px;
-  /* height: 100vh - 105px - 75px; */
+  height: calc(100vh - 305px);
   padding: 0 20px;
   overflow: auto;
 }

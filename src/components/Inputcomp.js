@@ -11,8 +11,8 @@ const Inputcomp = () => {
   // Sekmeler için status değerini tut
   const [status, setStatus] = useState("active");
 
-
-  const [checked, setChecked] = useState(true);
+  // Tema belirleyici toggle'ın durumunu tut
+  const [checked, setChecked] = useState(false);
 
   // Input içerisindeki değeri al
   const getValue = (val) => {
@@ -26,8 +26,8 @@ const Inputcomp = () => {
 
   // Checkbox ile tema durumunu güncelle
   const handleChange = () => {
-    if(checked){
-      setChecked(false);
+    if(!checked){
+      setChecked(true);
 
       // CSS değişkenleri temanın durumuna göre güncellemek için obje döndür
       for(const [key, value] of Object.entries(cssThemeObject)){
@@ -35,7 +35,7 @@ const Inputcomp = () => {
       }
 
     } else{
-      setChecked(true);
+      setChecked(false);
 
       // CSS değişkenleri temanın durumuna göre güncellemek için obje döndür
       for(const [key, value] of Object.entries(cssThemeObject)){
@@ -124,8 +124,8 @@ const Inputcomp = () => {
                 <div className="textArea">{x.text}</div>
                 <div className="listButtonBox">
                   {/* Listedeki görevi(itemi) tamamlama ve silme butonları(img) */}
-                  <img src="/images/check.svg" className={`sameBtn disable-select imgButton checkBtn ${x.status != "active" ? "checkActive" : ""}`} onClick={() => checkClick(x.id)} />
-                  <img src="/images/delete.svg" className="sameBtn disable-select imgButton deleteBtn" onClick={() => deleteClick(x.id)} />
+                  <img src={process.env.PUBLIC_URL + '/images/check.svg'} className={`sameBtn disable-select imgButton checkBtn ${x.status != "active" ? "checkActive" : ""}`} onClick={() => checkClick(x.id)} />
+                  <img src={process.env.PUBLIC_URL + '/images/delete.svg'} className="sameBtn disable-select imgButton deleteBtn" onClick={() => deleteClick(x.id)} />
                 </div>
               </div>
             );
