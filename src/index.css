@@ -35,12 +35,11 @@
 body{
   background-color: var(--bodyBackgroundColor);
   font-family:arial,sans-serif;
+  height: 100%;
 }
 
-
-
 .mainBoard{
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
