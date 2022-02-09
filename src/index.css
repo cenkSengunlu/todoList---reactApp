@@ -35,10 +35,17 @@
 body{
   background-color: var(--bodyBackgroundColor);
   font-family:arial,sans-serif;
-  position: relative;
-  padding-bottom:75px;
-  min-height:100vh;
 }
+
+
+
+.mainBoard{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 
 .empty{
   display: none;
@@ -90,7 +97,7 @@ body{
   filter: var(--svgBtnFilter);
   width: 25px;
   height: 25px;
-  display:none;
+  visibility: hidden;
 }
 
 
@@ -136,19 +143,14 @@ body{
   color: transparent;
 }
 
-.listBG{
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 50px 0;
-}
 
 .listClass{
   width: 600px;
-  height: calc(100vh - 305px);
   padding: 0 20px;
+  margin: 25px 0;
   overflow: auto;
+  flex-grow: 1;
+  
 }
 
 .listClass::-webkit-scrollbar-track
@@ -177,7 +179,7 @@ body{
   justify-content: space-between;
   background-color: var(--listItemBackgroundColor);
   color: var(--listItemTextColor);
-  padding: 0 15px;
+  padding-right: 15px;
   border: 2px solid var(--borderColor);
   border-top: none;
 }
@@ -187,7 +189,8 @@ body{
 }
 
 .listItem:hover .imgButton{
-  display:block;
+  /* display:block; */
+  visibility: visible;
 }
 
 .listItem:first-of-type{
@@ -201,23 +204,29 @@ body{
   border-bottom-right-radius: 5px;
 }
 
-.listButtonBox{
-  width:70px;
+.activeListButtonBox, .completedListButtonBox{
+  min-width:70px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+}
+
+.activeListButtonBox{
+  justify-content: space-between;
+}
+
+.completedListButtonBox{
+  justify-content: flex-end;
 }
 
 .textArea{
   max-width: 400px;
-  padding: 20px 15px;
+  padding: 20px 15px 20px 30px;
   font-size: 18px;
-  border-radius: 50px;
+  /* border-radius: 50px; */
   word-break: break-word;
 }
 
 .footerButtonBox{
-  position:absolute;
   height: 75px;
   width: 600px;
   background-color: var(--footerButtonBoxBackgroundColor);
@@ -227,12 +236,8 @@ body{
   align-items: center;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  margin: auto;
   border: 2px solid var(--borderColor);
   border-bottom:none;
-  bottom:0;
-  left:0;
-  right:0;
 }
 
 .footerInnerButtonBox{
@@ -251,6 +256,7 @@ body{
   justify-content: center;
   align-items: center;
   border-right: 3px solid var(--borderColor);
+  text-align: center;
 }
 
 .flexCenterCenter{
@@ -270,7 +276,7 @@ body{
 }
 
 .checkActive{
-  visibility:hidden;
+  display:none;
 }
 
 .footerBtn{
@@ -283,4 +289,65 @@ body{
 
 ::placeholder{
   color:var(--placeholderColor);
+}
+
+
+.activeStatus{
+  border-left: 5px solid #FF6961;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.listItem:first-of-type .activeStatus, .listItem:first-of-type .completedStatus{
+  border-top-left-radius: 5px;
+}
+
+.listItem:last-of-type .activeStatus, .listItem:last-of-type .completedStatus{
+  border-bottom-left-radius: 5px;
+}
+
+
+.completedStatus{
+  border-left: 5px solid 	#64bf6a;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+
+@media (max-width: 610px) {
+  .App{
+    width: 100vw;
+  }
+
+  .board{
+    width: 100vw;
+    margin:0;
+  }
+
+  .inputBG{
+    width: calc(100vw);
+    margin:0;
+  }
+
+  .listClass{
+    width: 100%;
+    /* margin:auto; */
+  }
+
+  .footerButtonBox{
+    width: 100vw;
+  }
+  .footerBtn{
+    width: 25vw;
+  }
+
+  .itemLeft{
+    width: 25vw;
+  }
+
+  .imgButton{
+    visibility:visible;
+  }
+
+
 }

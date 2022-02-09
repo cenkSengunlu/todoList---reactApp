@@ -8,6 +8,9 @@ const Inputcomp = () => {
   // Todo'ları tutacak dizi
   const [todoArr, setTodoArr] = useState( JSON.parse(localStorage.getItem('todoArr') || '[]') );
 
+  // todoArr clone
+  const [cloneTodoArr, setCloneTodoArr] = useState([]);
+
   // Sekmeler için status değerini tut
   const [status, setStatus] = useState("active");
 
@@ -23,6 +26,11 @@ const Inputcomp = () => {
   useEffect(() => {
     localStorage.setItem('todoArr', JSON.stringify(todoArr));
   }, [todoArr]);
+
+  useEffect(() => {
+    const sorted = [...todoArr.filter(x => status === "all" ? true : x.status === status)].sort((a,b) => (a.status > b.status) ? 1 : ((b.status > a.status) ? -1 : 0));
+    setCloneTodoArr(sorted);
+  }, [status, todoArr]);
 
   // Checkbox ile tema durumunu güncelle
   const handleChange = () => {
@@ -46,10 +54,13 @@ const Inputcomp = () => {
   }
 
 
+
+
+
   // todoArr'a(Listeye) yeni eleman ekle
   const handleClick = () => {
     // data boş ise ekleme yapma
-    if(data === ""){
+    if(data.trim() === ""){
       return;
     }
     
@@ -87,7 +98,7 @@ const Inputcomp = () => {
 
 
   return(
-    <div>
+    <div className="mainBoard">
       {/* Input Component'ı Temsili */}
       <div className="board">
         <div className="inputBG">
@@ -107,31 +118,30 @@ const Inputcomp = () => {
         </label>
       </div>
       
-      {/* Liste Component'ı Temsili */}
-      <div className="listBG">
-      {/* todoArr'ın durumuna göre bulunan sekmeye bilgilendirme yazısı yazdır. */}
-      <div className={`infoClass ${todoArr.filter(x => status === "all" ? true : x.status === status).length !== 0 ? 'empty' : ''}`}>
-            <p>
-                {status === "completed" ? "There are no completed task!" : "No task to do :)"}
-            </p>
-          </div>
-
-        <div className="listClass">
-          {/* status ile belirlenen sekmeyi todoArr dizisini filtreleyerek .map ile döndür */}
-          {todoArr.filter(x => status === "all" ? true : x.status === status).map((x, i) => {
-            return(
-              <div key={i} className="listItem">
-                <div className="textArea">{x.text}</div>
-                <div className="listButtonBox">
-                  {/* Listedeki görevi(itemi) tamamlama ve silme butonları(img) */}
-                  <img src={process.env.PUBLIC_URL + '/images/check.svg'} className={`sameBtn disable-select imgButton checkBtn ${x.status != "active" ? "checkActive" : ""}`} onClick={() => checkClick(x.id)} />
-                  <img src={process.env.PUBLIC_URL + '/images/delete.svg'} className="sameBtn disable-select imgButton deleteBtn" onClick={() => deleteClick(x.id)} />
-                </div>
-              </div>
-            );
-          }) }
+      
+        {/* todoArr'ın durumuna göre bulunan sekmeye bilgilendirme yazısı yazdır. */}
+        <div className={`infoClass ${todoArr.filter(x => status === "all" ? true : x.status === status).length !== 0 ? 'empty' : ''}`}>
+          <p>
+              {status === "completed" ? "There are no completed task!" : "No task to do :)"}
+          </p>
         </div>
+
+      <div className="listClass">
+        {/* status ile belirlenen sekmeyi todoArr dizisini filtreleyerek .map ile döndür */}
+        {cloneTodoArr.map((x, i) => {
+          return(
+            <div key={i} className={`listItem`}>
+              <div className={`textArea ${x.status}Status`}>{x.text}</div>
+              <div className={`${x.status}ListButtonBox`}>
+                {/* Listedeki görevi(itemi) tamamlama ve silme butonları(img) */}
+                <img src={process.env.PUBLIC_URL + '/images/check.svg'} className={`sameBtn disable-select imgButton checkBtn ${x.status != "active" ? "checkActive" : ""}`} onClick={() => checkClick(x.id)} />
+                <img src={process.env.PUBLIC_URL + '/images/delete.svg'} className="sameBtn disable-select imgButton deleteBtn" onClick={() => deleteClick(x.id)} />
+              </div>
+            </div>
+          );
+        }) }
       </div>
+      
 
       {/* Tamamlanma durumuna göre kategorize etme işlemi */}
       <div className="footer">
@@ -146,7 +156,6 @@ const Inputcomp = () => {
           </div>
         </div>
       </div>
-      
     </div>
   );
 }

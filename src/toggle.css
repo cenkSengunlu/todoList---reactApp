@@ -8,7 +8,6 @@
 
 .checkBox{
   width: 600px; 
-  margin: 0 auto -25.5px auto;
   display:flex;
   justify-content:flex-end;
 }
@@ -23,7 +22,6 @@
 /* The slider */
 .slider {
   position: absolute;
-  
   cursor: pointer;
   top: 0;
   left: 0;
@@ -70,4 +68,12 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+@media (max-width: 610px) {
+
+  .checkBox{
+    width: 100vw;
+    padding: 0 15px;
+  }
 }
