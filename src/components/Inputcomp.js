@@ -17,6 +17,9 @@ const Inputcomp = () => {
   // Tema belirleyici toggle'ın durumunu tut
   const [checked, setChecked] = useState(false);
 
+  //Todo'ların id'si için counter state'i
+  const [counter, setCounter] = useState(0);
+
   // Input içerisindeki değeri al
   const getValue = (val) => {
     setData(val.target.value);
@@ -66,7 +69,7 @@ const Inputcomp = () => {
     
     // todoArr'a eklenecek olan eleman(object) ve değerleri
     const item = {
-      id: todoArr.length + 1,
+      id: counter,
       text: data,
       status: "active"
     }
@@ -75,6 +78,7 @@ const Inputcomp = () => {
     const arr = [...todoArr, item]; 
     setTodoArr(arr);
     setData("");
+    setCounter(counter + 1);
   }
 
   // Listedeki görevi tamamla -> (seçilen dizi elemanını diziden kaldır)
@@ -134,8 +138,8 @@ const Inputcomp = () => {
               <div className={`textArea ${x.status}Status`}>{x.text}</div>
               <div className={`${x.status}ListButtonBox`}>
                 {/* Listedeki görevi(itemi) tamamlama ve silme butonları(img) */}
-                <img src={process.env.PUBLIC_URL + '/images/check.svg'} className={`sameBtn disable-select imgButton checkBtn ${x.status != "active" ? "checkActive" : ""}`} onClick={() => checkClick(x.id)} />
-                <img src={process.env.PUBLIC_URL + '/images/delete.svg'} className="sameBtn disable-select imgButton deleteBtn" onClick={() => deleteClick(x.id)} />
+                <img src={process.env.PUBLIC_URL + '/images/check.svg'} className={`sameBtn disable-select imgButton checkBtn ${x.status !== "active" ? "checkActive" : ""}`} onClick={() => checkClick(x.id)} alt=''/>
+                <img src={process.env.PUBLIC_URL + '/images/delete.svg'} className="sameBtn disable-select imgButton deleteBtn" onClick={() => deleteClick(x.id)} alt=''/>
               </div>
             </div>
           );
